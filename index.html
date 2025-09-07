@@ -1,10 +1,57 @@
-<script type="module">
-    // Import SDKs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BANANA Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #0d0d0d;
+      font-family: Arial, sans-serif;
+    }
+    .neon-text {
+      color: #fff700;
+      text-shadow: 0 0 5px #fff700, 0 0 10px #fffb8f, 0 0 20px #fff700;
+    }
+    .neon-btn {
+      background: #fff700;
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 10px #fff700, 0 0 20px #fffb8f;
+    }
+    .neon-btn:hover {
+      box-shadow: 0 0 15px #fff700, 0 0 30px #fff700;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center h-screen px-4">
+  <div class="w-full max-w-sm bg-[#1a1a1a] rounded-2xl p-6 text-center shadow-lg">
+    
+    <h1 class="text-3xl font-bold neon-text mb-6">🍌 BANANA</h1>
+
+    <!-- Login with Google -->
+    <button id="loginBtn" 
+      class="w-full py-3 mb-3 rounded-full neon-btn transition">
+      Sign in with Google
+    </button>
+
+    <!-- Register / Sign out -->
+    <button id="logoutBtn" 
+      class="w-full py-3 mb-3 rounded-full bg-white text-black font-bold">
+      Logout
+    </button>
+
+    <!-- User Info -->
+    <div id="userInfo" class="text-gray-300 mt-4 text-sm"></div>
+  </div>
+
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  
-    // Your Firebase config
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } 
+      from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    // 🔥 کانفیگ خودت
     const firebaseConfig = {
       apiKey: "AIzaSyCOL8YHwIe3OCCeJcZnb03Gsqf3e290QL0",
       authDomain: "ghost-2add0.firebaseapp.com",
@@ -14,41 +61,34 @@
       appId: "1:765160111148:web:51b3ccb5d26a6cb1cfe589",
       measurementId: "G-P5KH7K9D48"
     };
-  
-    // Init Firebase
+
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  
-    // Auth
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
-  
-    // Login button
+
+    // login
     document.getElementById("loginBtn").addEventListener("click", () => {
       signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
           document.getElementById("userInfo").innerHTML = `
-            ✅ Logged in! <br>
-            👤 Name: ${user.displayName}<br>
-            📧 Email: ${user.email}<br>
-            <img src="${user.photoURL}" width="50" style="border-radius:50%">`;
+            <div class="mt-3">
+              <img src="${user.photoURL}" class="w-16 h-16 rounded-full mx-auto mb-2">
+              <p class="text-yellow-300 font-bold">${user.displayName}</p>
+              <p class="text-gray-400 text-xs">${user.email}</p>
+            </div>`;
         })
         .catch((error) => {
-          console.error(error);
           alert("Login failed: " + error.message);
         });
     });
-  
-    // Logout button
+
+    // logout
     document.getElementById("logoutBtn").addEventListener("click", () => {
       signOut(auth).then(() => {
         document.getElementById("userInfo").innerHTML = "Logged out!";
       });
     });
   </script>
-  
-  <button id="loginBtn">Login with Google</button>
-  <button id="logoutBtn">Logout</button>
-  <div id="userInfo"></div>
-  
+</body>
+</html>
