@@ -1,0 +1,54 @@
+<script type="module">
+    // Import SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOL8YHwIe3OCCeJcZnb03Gsqf3e290QL0",
+      authDomain: "ghost-2add0.firebaseapp.com",
+      projectId: "ghost-2add0",
+      storageBucket: "ghost-2add0.firebasestorage.app",
+      messagingSenderId: "765160111148",
+      appId: "1:765160111148:web:51b3ccb5d26a6cb1cfe589",
+      measurementId: "G-P5KH7K9D48"
+    };
+  
+    // Init Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  
+    // Auth
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+  
+    // Login button
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          document.getElementById("userInfo").innerHTML = `
+            ✅ Logged in! <br>
+            👤 Name: ${user.displayName}<br>
+            📧 Email: ${user.email}<br>
+            <img src="${user.photoURL}" width="50" style="border-radius:50%">`;
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Login failed: " + error.message);
+        });
+    });
+  
+    // Logout button
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        document.getElementById("userInfo").innerHTML = "Logged out!";
+      });
+    });
+  </script>
+  
+  <button id="loginBtn">Login with Google</button>
+  <button id="logoutBtn">Logout</button>
+  <div id="userInfo"></div>
+  
