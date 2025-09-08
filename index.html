@@ -3,133 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>گردونه حرفه‌ای</title>
+<title>🎡 گردونه حرفه‌ای</title>
 <link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.003/font-face.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root {
-  --bg: #1f1b24;
+  --bg: linear-gradient(135deg,#1f1b24,#2c2233);
   --panel: #2b2730;
   --accent: #f7c948;
   --accent-dark: #e0b323;
   --text: #fff;
+  --card-bg: linear-gradient(145deg,#2b2730,#3c3540);
 }
-html, body {margin:0; padding:0; font-family: Vazirmatn, sans-serif; background: var(--bg); height:100%; display:flex; flex-direction:column;}
+html, body {margin:0; padding:0; font-family: Vazirmatn, sans-serif; height:100%; display:flex; flex-direction:column; background:var(--bg);}
 .shell {flex:1; display:flex; flex-direction:column;}
 .content {flex:1; overflow:auto; padding:16px;}
-.panel {background: var(--panel); border-radius:16px; padding:16px; margin-bottom:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);}
-.bottom-nav {display:flex; justify-content:space-around; padding:8px 0; border-top:2px solid var(--accent-dark); background: var(--panel);}
-.bottom-nav button {flex:1; border:none; background:none; color:var(--text); display:flex; flex-direction:column; align-items:center; font-size:12px; gap:4px; cursor:pointer;}
+.panel {background: var(--panel); border-radius:20px; padding:20px; margin-bottom:16px; box-shadow: 0 8px 24px rgba(0,0,0,0.6);}
+.card {background: var(--card-bg); border-radius:16px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); padding:12px; margin-bottom:12px; transition: transform 0.2s ease;}
+.card:hover {transform: scale(1.03);}
+.bottom-nav {display:flex; justify-content:space-around; padding:10px 0; border-top:2px solid var(--accent-dark); background: var(--panel);}
+.bottom-nav button {flex:1; border:none; background:none; color:var(--text); display:flex; flex-direction:column; align-items:center; font-size:12px; gap:4px; cursor:pointer; transition: color 0.2s;}
 .bottom-nav button.active {color: var(--accent); font-weight:bold;}
-#wheelCanvas {display:block; margin:auto; border:5px solid var(--accent); border-radius:50%; background: #3b2f0b;}
-.btn {padding:10px; border:none; border-radius:12px; font-weight:bold; cursor:pointer; background:var(--accent); color:var(--text); width:100%; margin-top:12px;}
-#userStats {display:flex; justify-content:space-around; margin-bottom:16px; font-weight:bold;}
+#wheelCanvas {display:block; margin:auto; border:6px solid var(--accent); border-radius:50%; background: #3b2f0b; box-shadow:0 0 30px rgba(255,201,72,0.7);}
+#spinButton {padding:16px; font-size:16px; font-weight:bold; border:none; border-radius:16px; cursor:pointer; background: var(--accent); color:var(--text); width:100%; margin-top:16px; box-shadow: 0 4px 20px rgba(255,201,72,0.6); transition: all 0.2s;}
+#spinButton:hover {transform: scale(1.05); box-shadow: 0 6px 30px rgba(255,201,72,0.9);}
+#userStats {display:flex; justify-content:space-around; margin-bottom:16px; font-weight:bold; gap:8px;}
+#wheelBlockedMsg {text-align:center; color:#f7c948; font-weight:bold; padding:12px; border:2px solid #f7c948; border-radius:12px; margin-top:12px; display:none;}
+#result {text-align:center; font-weight:bold; margin-top:12px; font-size:16px;}
 .hidden {display:none;}
 table {width:100%; border-collapse:collapse; margin-top:12px;}
 th, td {padding:8px; border-bottom:1px solid #555; text-align:right;}
+.store-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:12px; background: linear-gradient(145deg,#3c3540,#2b2730); border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+.store-item button {background: var(--accent); border:none; padding:8px 12px; border-radius:12px; cursor:pointer; color:#1f1b24; font-weight:bold; transition: all 0.2s;}
+.store-item button:hover {transform: scale(1.05); box-shadow:0 4px 20px rgba(255,201,72,0.6);}
+input, button {font-family: Vazirmatn,sans-serif;}
 </style>
 </head>
 <body>
+    <!-- HTML -->
+    <audio id="bgAudio" src="https://newgenesis.ai/score/m1.mp3" preload="auto" loop></audio>
 <div class="shell">
   <div class="content">
     <!-- HOME -->
-    <div id="homeTab">
-      <div class="panel">
-        <h2 style="text-align:center;">🎡 گردونه موز حرفه‌ای</h2>
-        <div id="userStats">
-          <div>💰 موز: <span id="coins">0</span></div>
-          <div>💵 قیمت بعدی چرخش: <span id="spinPrice">10000</span> تومان</div>
-        </div>
-        <canvas id="wheelCanvas" width="300" height="300"></canvas>
-        <button class="btn" id="spinButton">چرخش گردونه</button>
-        <p id="result" style="text-align:center; font-weight:bold; margin-top:12px;"></p>
+    <div id="homeTab" class="panel">
+      <h2 style="text-align:center;">🎡 گردونه موز حرفه‌ای</h2>
+      <div id="userStats" class="card">
+        <div><i class="fas fa-banana"></i> موز: <span id="coins">0</span></div>
+        <div><i class="fas fa-money-bill-wave"></i> قیمت بعدی چرخش: <span id="spinPrice">10000</span> تومان</div>
       </div>
+      <canvas id="wheelCanvas" width="300" height="300"></canvas>
+      <div id="wheelBlockedMsg" class="card">⚠️ گردونه فعال نیست! از ادمین بخواهید فعال کند.</div>
+      <button class="btn" id="spinButton">چرخش گردونه</button>
+      <p id="result"></p>
     </div>
 
     <!-- STORE -->
-    <div id="storeTab" class="hidden">
-      <div class="panel">
-        <h2>💎 فروشگاه موز</h2>
-        <p>با موزها می‌توانید خدمات اضافه کنید</p>
-        <div id="storeItems"></div>
-      </div>
+    <div id="storeTab" class="panel hidden">
+      <h2>💎 فروشگاه موز</h2>
+      <div id="storeItems"></div>
     </div>
 
     <!-- PROFILE -->
-    <div id="profileTab" class="hidden">
-      <div class="panel">
-        <h2>👤 پروفایل شما</h2>
-        <div id="walletStatus">کیف پول متصل نیست</div>
-        <h3>تراکنش‌ها</h3>
-        <table>
-          <thead><tr><th>تاریخ</th><th>جایزه</th></tr></thead>
-          <tbody id="transactions"></tbody>
-        </table>
+    <div id="profileTab" class="panel hidden">
+      <h2 style="text-align:center;">👤 پروفایل شما</h2>
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:12px;">
+        <span>🎵 موسیقی پس‌زمینه</span>
+        <button id="toggleAudioBtn" style="font-size:20px; background:none; border:none; cursor:pointer; color:#f7c948;">
+          <i class="fas fa-volume-up"></i>
+        </button>
+      </div>      
+      <div id="walletStatus" class="card"><i class="fas fa-wallet"></i> <span id="walletText">کیف پول متصل نیست</span></div>
+      <div class="card" style="display:flex; gap:8px; margin-top:12px;">
+        <input type="text" id="walletInput" placeholder="آدرس کیف پول خود را وارد کنید" style="flex:1; padding:8px; border-radius:12px; border:none;">
+        <button id="connectWalletBtn" style="background:#f7c948; color:#1f1b24; border:none; padding:8px 12px; border-radius:12px; font-weight:bold; cursor:pointer;">متصل کردن</button>
       </div>
+      <h3>تراکنش‌ها</h3>
+      <table>
+        <thead><tr><th>تاریخ</th><th>جایزه</th></tr></thead>
+        <tbody id="transactions"></tbody>
+      </table>
     </div>
   </div>
 
   <!-- Bottom Nav -->
   <div class="bottom-nav">
-    <button id="tabHome" class="active">خانه</button>
-    <button id="tabStore">فروشگاه</button>
-    <button id="tabProfile">پروفایل</button>
+    <button id="tabHome" class="active"><i class="fas fa-house"></i> خانه</button>
+    <button id="tabStore"><i class="fas fa-store"></i> فروشگاه</button>
+    <button id="tabProfile"><i class="fas fa-user"></i> پروفایل</button>
   </div>
+</div>
+
+<div id="walletModal" style="
+  display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:#2b2730; color:#fff; padding:20px; border-radius:16px;
+  box-shadow:0 6px 30px rgba(0,0,0,0.7); z-index:1000; max-width:90%; text-align:center;">
+  <p id="walletModalText" style="white-space:pre-line;"></p>
+  <button onclick="document.getElementById('walletModal').style.display='none'"
+    style="margin-top:12px;padding:6px 12px;border:none;border-radius:8px;
+    cursor:pointer;background:#fff;color:#1f1b24;font-weight:bold;">بستن</button>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCOL8YHwIe3OCCeJcZnb03Gsqf3e290QL0",
-  authDomain: "ghost-2add0.firebaseapp.com",
-  projectId: "ghost-2add0",
-  storageBucket: "ghost-2add0.firebasestorage.app",
-  messagingSenderId: "765160111148",
-  appId: "1:765160111148:web:51b3ccb5d26a6cb1cfe589",
-  measurementId: "G-P5KH7K9D48"
-};
-
+const firebaseConfig = {apiKey:"AIzaSyCOL8YHwIe3OCCeJcZnb03Gsqf3e290QL0",authDomain:"ghost-2add0.firebaseapp.com",projectId:"ghost-2add0",storageBucket:"ghost-2add0.firebasestorage.app",messagingSenderId:"765160111148",appId:"1:765160111148:web:51b3ccb5d26a6cb1cfe589",measurementId:"G-P5KH7K9D48"};
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const userID = "user_x"; // شناسه کاربر
+const userID = "user_x";
 
 // Tabs
-const tabs = { homeTab: document.getElementById('homeTab'), storeTab: document.getElementById('storeTab'), profileTab: document.getElementById('profileTab')};
-function switchTab(tabId){
-  Object.values(tabs).forEach(t=>t.classList.add('hidden'));
-  tabs[tabId].classList.remove('hidden');
-  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab'+tabId.replace('Tab','')).classList.add('active');
-}
-document.getElementById('tabHome').addEventListener('click',()=>switchTab('homeTab'));
-document.getElementById('tabStore').addEventListener('click',()=>switchTab('storeTab'));
-document.getElementById('tabProfile').addEventListener('click',()=>switchTab('profileTab'));
+const tabs = {homeTab: document.getElementById('homeTab'), storeTab: document.getElementById('storeTab'), profileTab: document.getElementById('profileTab')};
+function switchTab(tabId){Object.values(tabs).forEach(t=>t.classList.add('hidden')); tabs[tabId].classList.remove('hidden'); document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active')); if(tabId==='homeTab') document.getElementById('tabHome').classList.add('active'); else if(tabId==='storeTab') document.getElementById('tabStore').classList.add('active'); else document.getElementById('tabProfile').classList.add('active');}
+document.getElementById('tabHome').addEventListener('click', ()=>switchTab('homeTab'));
+document.getElementById('tabStore').addEventListener('click', ()=>switchTab('storeTab'));
+document.getElementById('tabProfile').addEventListener('click', ()=>switchTab('profileTab'));
 
 // Wheel
-const canvas = document.getElementById('wheelCanvas');
-const ctx = canvas.getContext('2d');
-const center = canvas.width / 2;
-const radius = center - 10;
-const segments = ["100 موز","150 موز","200 موز","250 موز","1000 موز"];
-const colors = ["#ffe066","#ffd633","#ffc107","#ffb300","#ffa000"];
+const canvas=document.getElementById('wheelCanvas'); const ctx=canvas.getContext('2d'); const center=canvas.width/2; const radius=center-10;
+const segments=["100 موز","150 موز","200 موز","250 موز","1000 موز"]; const colors=["#ffe066","#ffd633","#ffc107","#ffb300","#ffa000"];
+let coins=0, angle=0, spinning=false, spinSpeed=0, spinPrice=10000;
+const blockedMsg=document.getElementById('wheelBlockedMsg');
 
-let coins = 0, angle = 0, spinning = false, spinSpeed = 0;
-let spinPrice = 10000;
-
-// ایجاد یا بارگذاری کاربر
-async function createUserIfNotExist() {
-  const userRef = doc(db, "users", userID);
-  const userSnap = await getDoc(userRef);
+async function createUserIfNotExist(){
+  const userRef=doc(db,"users",userID);
+  const userSnap=await getDoc(userRef);
   if(!userSnap.exists()){
-    await setDoc(userRef, { coins:0, wheelUnlocked:false, transactions:[], spinPrice:10000 });
+    await setDoc(userRef,{coins:0,wheelUnlocked:false,transactions:[],spinPrice:10000});
   } else {
-    const data = userSnap.data();
-    coins = data.coins;
-    spinPrice = data.spinPrice || 10000;
-    document.getElementById('coins').textContent = coins;
-    document.getElementById('spinPrice').textContent = spinPrice;
+    const data=userSnap.data();
+    coins=data.coins; spinPrice=data.spinPrice||10000;
+    document.getElementById('coins').textContent=coins;
+    document.getElementById('spinPrice').textContent=spinPrice;
     updateTransactions(data.transactions);
   }
 }
@@ -137,12 +142,11 @@ createUserIfNotExist();
 
 function drawWheel(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  const segAngle = 2*Math.PI/segments.length;
+  const segAngle=2*Math.PI/segments.length;
   segments.forEach((text,i)=>{
-    ctx.beginPath();
-    ctx.moveTo(center,center);
+    ctx.beginPath(); ctx.moveTo(center,center);
     ctx.arc(center,center,radius,i*segAngle+angle,(i+1)*segAngle+angle);
-    ctx.fillStyle = colors[i%colors.length]; ctx.fill();
+    ctx.fillStyle=colors[i%colors.length]; ctx.fill();
     ctx.save(); ctx.translate(center,center); ctx.rotate(i*segAngle+segAngle/2+angle);
     ctx.fillStyle='#1f1b24'; ctx.textAlign='right'; ctx.font='bold 14px Vazirmatn'; ctx.fillText(text,radius-10,5);
     ctx.restore();
@@ -151,68 +155,143 @@ function drawWheel(){
 }
 
 function updateTransactions(trans){
-  const tbody = document.getElementById('transactions');
-  tbody.innerHTML = "";
+  const tbody=document.getElementById('transactions'); tbody.innerHTML="";
   trans?.forEach(t=>{
-    const date = t.timestamp ? new Date(t.timestamp).toLocaleString() : "-";
-    tbody.innerHTML += `<tr><td>${date}</td><td>${t.reward}</td></tr>`;
+    const date=t.timestamp?new Date(t.timestamp).toLocaleString():"-";
+    let icon=t.type==="store"?"🛒":"🎡";
+    tbody.innerHTML+=`<tr><td>${date}</td><td>${icon} ${t.reward}</td></tr>`;
   });
 }
 
 function handleResult(selected){
-  const reward = segments[selected];
-  coins += parseInt(reward);
-  document.getElementById('coins').textContent = coins;
-  document.getElementById('result').textContent = `🎉 برنده شدی: ${reward}!`;
+  const reward=segments[selected]; coins+=parseInt(reward);
+  document.getElementById('coins').textContent=coins;
+  document.getElementById('result').textContent=`🎉 برنده شدی: ${reward}!`;
 }
 
-// ذخیره تراکنش بدون ارور Firebase
 async function saveTransaction(selected){
-  const userRef = doc(db, "users", userID);
-  const trans = { reward: segments[selected], timestamp: Date.now() };
-  spinPrice += 10000; // افزایش قیمت بعد از هر بار
-  await updateDoc(userRef, {
-    coins: coins,
-    wheelUnlocked:false,
-    spinPrice: spinPrice,
-    transactions: arrayUnion(trans)
-  });
-  updateTransactions([...(await getDoc(userRef)).data().transactions]);
-  document.getElementById('spinPrice').textContent = spinPrice;
+  const userRef=doc(db,"users",userID);
+  const trans={reward:segments[selected], timestamp:Date.now(), type:"spin"};
+  spinPrice+=10000;
+  await updateDoc(userRef,{coins:coins,wheelUnlocked:false,spinPrice:spinPrice,transactions:arrayUnion(trans)});
+  document.getElementById('spinPrice').textContent=spinPrice;
+  updateTransactions((await getDoc(userRef)).data().transactions);
 }
 
-// انیمیشن چرخش
-function animate(){
-  if(spinning){
-    angle += spinSpeed;
-    spinSpeed *= 0.97;
-    if(spinSpeed < 0.002){
-      spinning=false;
-      spinSpeed=0;
-      const segAngle = 2*Math.PI/segments.length;
-      let adjustedAngle = (3*Math.PI/2 - angle) % (2*Math.PI);
-      if(adjustedAngle<0) adjustedAngle += 2*Math.PI;
-      let selected = Math.floor(adjustedAngle / segAngle);
-      handleResult(selected);
-      saveTransaction(selected);
-    }
-  }
-  drawWheel();
-  requestAnimationFrame(animate);
-}
+function animate(){if(spinning){angle+=spinSpeed; spinSpeed*=0.97; if(spinSpeed<0.002){spinning=false; spinSpeed=0; const segAngle=2*Math.PI/segments.length; let adjustedAngle=(3*Math.PI/2-angle)%(2*Math.PI); if(adjustedAngle<0) adjustedAngle+=2*Math.PI; let selected=Math.floor(adjustedAngle/segAngle); handleResult(selected); saveTransaction(selected);}} drawWheel(); requestAnimationFrame(animate);}
 animate();
 
-// چرخش گردونه فقط وقتی فعال
 document.getElementById('spinButton').addEventListener('click', async ()=>{
-  const userRef = doc(db, "users", userID);
-  const userSnap = await getDoc(userRef);
-  if(!userSnap.exists()) return alert("کاربر وجود ندارد!");
-  const userData = userSnap.data();
-  if(!userData.wheelUnlocked) return alert("گردونه فعال نیست! از ادمین بخواهید فعال کند.");
-  if(!spinning){
-    spinning = true;
-    spinSpeed = 0.3 + Math.random()*0.2;
-    document.getElementById('result').textContent = '';
+  const userRef=doc(db,"users",userID); const userSnap=await getDoc(userRef);
+  if(!userSnap.exists()) return; const userData=userSnap.data();
+  if(!userData.wheelUnlocked){blockedMsg.style.display='block'; return;}
+  blockedMsg.style.display='none';
+  if(!spinning){spinning=true; spinSpeed=0.3+Math.random()*0.2; document.getElementById('result').textContent='';}
+});
+
+// --- Modal ---
+const modal=document.createElement('div');
+modal.id='storeModal';
+modal.style.cssText=`display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#2b2730; color:#fff; padding:20px; border-radius:16px; box-shadow:0 6px 30px rgba(0,0,0,0.7); z-index:1000; max-width:90%; text-align:center;`;
+modal.innerHTML=`<p id="modalText" style="white-space:pre-line;"></p>
+<a id="modalTelegramLink" href="#" target="_blank" style="display:inline-block;margin-top:12px;background:#f7c948;color:#1f1b24;padding:8px 16px;border-radius:12px;font-weight:bold;text-decoration:none;">باز کردن تلگرام</a>
+<br>
+<button id="modalCloseBtn" style="margin-top:12px;padding:6px 12px;border:none;border-radius:8px; cursor:pointer;background:#fff;color:#1f1b24;font-weight:bold;">بستن</button>`;
+document.body.appendChild(modal);
+document.getElementById('modalCloseBtn').addEventListener('click', ()=>{modal.style.display='none';});
+
+function showModal(itemName,cost,type){
+  if(type==="reward" && coins<cost){
+    document.getElementById('modalText').textContent=`⚠️ موز کافی نیست!\nبرای خرید ${itemName} نیاز به ${cost} موز دارید.`;
+    document.getElementById('modalTelegramLink').style.display='none';
+    modal.style.display='block'; return;
+  }
+  if(type==="reward"){coins-=cost; document.getElementById('coins').textContent=coins;
+    document.getElementById('modalText').textContent=`✅ خرید ${itemName} انجام شد!\n📩 برای تکمیل به تلگرام مراجعه کنید: @hexdix\n🖼️ فراموش نکنید اسکرین‌شات ارسال کنید.`;}
+  else if(type==="spin"){document.getElementById('modalText').textContent=`🎡 برای چرخش گردونه به تلگرام مراجعه کنید: @hexdix`;}
+  document.getElementById('modalTelegramLink').href="tg://resolve?domain=hexdix"; document.getElementById('modalTelegramLink').style.display='inline-block'; modal.style.display='block';
+}
+
+// --- Store Products ---
+const storeProducts=[
+  {name:"چرخش گردونه", cost:0, type:"spin"},
+  {name:"تلگرام پرمیوم 3 ماهه", cost:2200, type:"reward"},
+  {name:"تلگرام پرمیوم 6 ماهه", cost:3350, type:"reward"},
+  {name:"تلگرام پرمیوم 1 ساله", cost:5430, type:"reward"},
+  {name:"50 استارز", cost:360, type:"reward"},
+  {name:"150 استارز", cost:650, type:"reward"},
+  {name:"500 استارز", cost:1100, type:"reward"},
+  {name:"1000 استارز", cost:1550, type:"reward"}
+];
+const storeDiv=document.getElementById('storeItems');
+storeProducts.forEach(p=>{
+  const card=document.createElement('div'); card.className="card store-item";
+  card.innerHTML=`<span>${p.name} ${p.cost>0?"- "+p.cost+" موز":""}</span>`;
+  const btn=document.createElement('button'); btn.textContent="خرید";
+  btn.addEventListener('click', ()=> showModal(p.name,p.cost,p.type));
+  card.appendChild(btn); storeDiv.appendChild(card);
+});
+
+// --- Wallet ---
+const walletInput=document.getElementById('walletInput');
+const connectWalletBtn=document.getElementById('connectWalletBtn');
+const walletText=document.getElementById('walletText');
+
+async function loadWallet(){
+  const userRef=doc(db,"users",userID);
+  const userSnap=await getDoc(userRef);
+  if(userSnap.exists()){
+    const data=userSnap.data();
+    if(data.walletAddress){walletText.textContent="کیف پول متصل است: "+data.walletAddress; walletInput.value=data.walletAddress;}
+  }
+}
+loadWallet();
+
+connectWalletBtn.addEventListener('click', async ()=>{
+  const address = walletInput.value.trim();
+  if(!address){
+    showWalletModal("⚠️ آدرس کیف پول را وارد کنید!");
+    return;
+  }
+  
+  const userRef = doc(db,"users",userID);
+  await updateDoc(userRef,{walletAddress:address});
+  walletText.textContent = "کیف پول متصل است: " + address;
+  
+  // نمایش کادر بجای alert
+  showWalletModal("✅ کیف پول با موفقیت متصل شد\nآدرس کیف پول: " + address);
+});
+
+// تابع Modal
+function showWalletModal(text){
+  const modal = document.getElementById('walletModal');
+  document.getElementById('walletModalText').textContent = text;
+  modal.style.display = 'block';
+}
+// JS
+const audio = document.getElementById('bgAudio');
+audio.volume = 0.1;
+let audioStarted = false;
+
+document.body.addEventListener('click', () => {
+  if(!audioStarted){
+    audio.play().catch(e => console.log("خطا در پخش صدا:", e));
+    audioStarted = true;
+  }
+});
+
+const toggleBtn = document.getElementById('toggleAudioBtn');
+const toggleIcon = toggleBtn.querySelector('i');
+
+toggleBtn.addEventListener('click', () => {
+  if(audio.paused){
+    audio.play();
+    toggleIcon.classList.remove('fa-volume-mute');
+    toggleIcon.classList.add('fa-volume-up');
+  } else {
+    audio.pause();
+    toggleIcon.classList.remove('fa-volume-up');
+    toggleIcon.classList.add('fa-volume-mute');
   }
 });
 </script>
