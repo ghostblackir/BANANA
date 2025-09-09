@@ -8,18 +8,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root {
-  --bg: linear-gradient(135deg,#1f1b24,#2c2233);
-  --panel: #2b2730;
-  --accent: #f7c948;
-  --accent-dark: #e0b323;
+  --bg: linear-gradient(135deg, #f2f3f7, #ffffff); /* gradient-bg */
+  --panel: #00a2ff; /* جایگزین panel */
+  --accent: hsl(46, 86%, 67%); /* رنگ طلایی روشن */
+  --accent-dark: #85e5fd; /* رنگ طلایی تیره‌تر */
   --text: #fff;
-  --card-bg: linear-gradient(145deg,#2b2730,#3c3540);
+  --card-bg: linear-gradient(145deg, #00ffaa, #03af5f); /* کارت‌ها هم گرادیانت آبی-بنفش */
 }
+
 html, body {margin:0; padding:0; font-family: Vazirmatn, sans-serif; height:100%; display:flex; flex-direction:column; background:var(--bg);}
 .shell {flex:1; display:flex; flex-direction:column;}
 .content {flex:1; overflow:auto; padding:16px;}
-.panel {background: var(--panel); border-radius:20px; padding:20px; margin-bottom:16px; box-shadow: 0 8px 24px rgba(0,0,0,0.6);}
-.card {background: var(--card-bg); border-radius:16px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); padding:12px; margin-bottom:12px; transition: transform 0.2s ease;}
+.panel {background: var(--panel); border-radius:20px; padding:20px; margin-bottom:16px; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.6);}
+.card {background: var(--card-bg); border-radius:16px; box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5); padding:12px; margin-bottom:12px; transition: transform 0.2s ease;}
 .card:hover {transform: scale(1.03);}
 .bottom-nav {display:flex; justify-content:space-around; padding:10px 0; border-top:2px solid var(--accent-dark); background: var(--panel);}
 .bottom-nav button {flex:1; border:none; background:none; color:var(--text); display:flex; flex-direction:column; align-items:center; font-size:12px; gap:4px; cursor:pointer; transition: color 0.2s;}
@@ -33,9 +34,9 @@ html, body {margin:0; padding:0; font-family: Vazirmatn, sans-serif; height:100%
 .hidden {display:none;}
 table {width:100%; border-collapse:collapse; margin-top:12px;}
 th, td {padding:8px; border-bottom:1px solid #555; text-align:right;}
-.store-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:12px; background: linear-gradient(145deg,#3c3540,#2b2730); border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.5);}
-.store-item button {background: var(--accent); border:none; padding:8px 12px; border-radius:12px; cursor:pointer; color:#1f1b24; font-weight:bold; transition: all 0.2s;}
-.store-item button:hover {transform: scale(1.05); box-shadow:0 4px 20px rgba(255,201,72,0.6);}
+.store-item {display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:12px; background: linear-gradient(145deg,#34e4fc,#00ffbf); border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+.store-item button {background: var(--accent); border:none; padding:8px 12px; border-radius:12px; cursor:pointer; color:#ffffff; font-weight:bold; transition: all 0.2s;}
+.store-item button:hover {transform: scale(1.05); box-shadow:0 4px 20px rgba(173, 213, 250, 0.877);}
 input, button {font-family: Vazirmatn,sans-serif;}
 </style>
 </head>
@@ -90,6 +91,7 @@ input, button {font-family: Vazirmatn,sans-serif;}
     <button id="tabHome" class="active"><i class="fas fa-house"></i> خانه</button>
     <button id="tabStore"><i class="fas fa-store"></i> فروشگاه</button>
     <button id="tabProfile"><i class="fas fa-user"></i> پروفایل</button>
+    <button id="tabReferral"><i class="fas fa-users"></i>قرعه کشی</button>
   </div>
 </div>
 
@@ -270,7 +272,7 @@ function showWalletModal(text){
 }
 // JS
 const audio = document.getElementById('bgAudio');
-audio.volume = 0.1;
+audio.volume = 0.4;
 let audioStarted = false;
 
 document.body.addEventListener('click', () => {
@@ -294,6 +296,11 @@ toggleBtn.addEventListener('click', () => {
     toggleIcon.classList.add('fa-volume-mute');
   }
 });
+
+document.getElementById('tabReferral').addEventListener('click', ()=>{
+  window.location.href = "referral.html";
+});
+
 </script>
 </body>
 </html>
