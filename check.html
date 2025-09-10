@@ -1,169 +1,362 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BANANA - Premium Authentication</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body { font-family: 'Inter', sans-serif; }
-.luxury-gradient { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #1f1f1f 50%, #0f0f0f 100%); }
-.gold-accent { background: linear-gradient(135deg, #d4af37 0%, #ffd700 50%, #b8860b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.premium-card { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border:1px solid rgba(212,175,55,0.2); box-shadow: 0 25px 50px rgba(0,0,0,0.25),0 0 0 1px rgba(255,255,255,0.1);}
-.elegant-input { background: rgba(248,248,248,0.8); border:2px solid rgba(212,175,55,0.3); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
-.elegant-input:focus { background: rgba(255,255,255,0.95); border-color:#d4af37; box-shadow:0 0 0 4px rgba(212,175,55,0.1);}
-.luxury-button { background: linear-gradient(135deg,#d4af37 0%,#ffd700 50%,#b8860b 100%); box-shadow:0 8px 25px rgba(212,175,55,0.3); transition: all 0.3s cubic-bezier(0.4,0,0.2,1);}
-.luxury-button:hover { transform: translateY(-2px); box-shadow:0 12px 35px rgba(212,175,55,0.4);}
-.shake { animation: elegantShake 0.6s ease-in-out; }
-@keyframes elegantShake { 0%,100% {transform:translateX(0);} 25% {transform:translateX(-3px);} 75% {transform:translateX(3px);} }
-.fade-in { animation: luxuryFadeIn 1.2s ease-out; }
-@keyframes luxuryFadeIn { from {opacity:0; transform: translateY(30px) scale(0.95);} to {opacity:1; transform:translateY(0) scale(1);} }
-.transform-style-preserve-3d { transform-style: preserve-3d; }
-.backface-hidden { backface-visibility: hidden; }
-.rotate-y-180 { transform: rotateY(180deg);}
-.card-flipped { transform: rotateY(180deg); }
-.card-face { transition: transform 0.6s; }
-.secret-panel { background: linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 50%,#1f1f1f 100%); color:white; }
-.code-display { background: rgba(212,175,55,0.1); border:2px solid rgba(212,175,55,0.3); backdrop-filter: blur(10px); }
-.luxury-title { font-family: 'Playfair Display', serif; font-weight:600; letter-spacing:0.1em; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ایستگاه فضایی - تشخیص فیلترشکن</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a0b3d 25%, #2d1b69 50%, #1a0b3d 75%, #0c0c2e 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        .star:nth-child(odd) {
+            animation-delay: 1s;
+        }
+        
+        .star:nth-child(3n) {
+            animation-delay: 2s;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .floating-planets {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        
+        .pulse-animation {
+            animation: spacePulse 2s infinite;
+        }
+        
+        @keyframes spacePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        
+        .check-animation {
+            animation: spaceCheckmark 0.8s ease-in-out;
+        }
+        
+        @keyframes spaceCheckmark {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .error-animation {
+            animation: spaceShake 0.6s ease-in-out;
+        }
+        
+        @keyframes spaceShake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-8px) rotate(-2deg); }
+            75% { transform: translateX(8px) rotate(2deg); }
+        }
+        
+        .space-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5), 0 0 40px rgba(147, 51, 234, 0.3);
+        }
+    </style>
 </head>
-<body class="min-h-screen luxury-gradient flex items-center justify-center p-4">
-
-<div id="mainContent" class="fade-in" style="perspective:1000px;">
-  <div class="card-container w-full max-w-md relative transition-transform duration-700 transform-style-preserve-3d" id="cardContainer">
+<body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Animated Stars Background -->
+    <div class="stars"></div>
     
-    <!-- Front Panel -->
-    <div class="card-face backface-hidden premium-card rounded-2xl p-10 text-center">
-      <div class="mb-10">
-        <div class="flex justify-center items-center mb-6">
-          <div class="banana-logo cursor-pointer" onclick="flipCard()">
-            <img src="https://cdn-icons-png.flaticon.com/512/6482/6482627.png" alt="BANANA Logo" class="w-20 h-20 object-contain rounded-lg">
-          </div>
-        </div>
-        <h1 class="luxury-title text-5xl gold-accent mb-3">BANANA</h1>
-        <p class="text-gray-600 text-sm font-medium tracking-wide">PREMIUM AUTHENTICATION SYSTEM</p>
-      </div>
-
-      <div class="space-y-8">
-        <div class="text-left">
-          <label class="block text-sm font-medium text-gray-700 mb-3">Authentication Code</label>
-          <input type="text" id="captchaInput" class="elegant-input w-full px-6 py-4 rounded-lg text-center text-xl font-mono tracking-[0.3em] focus:outline-none" placeholder="Enter Code" maxlength="6">
-        </div>
-
-        <div id="errorMessage" class="hidden bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
-          <p class="font-medium text-sm">Invalid authentication code</p>
-          <p class="text-xs mt-1">Attempts remaining: <span id="attemptsLeft">3</span></p>
-        </div>
-
-        <button id="verifyBtn" class="luxury-button w-full text-white font-semibold py-4 px-8 rounded-lg text-sm tracking-wide uppercase">
-          Authenticate
-        </button>
-      </div>
+    <!-- Floating Planets -->
+    <div class="floating-planets">
+        <div class="planet w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-500" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="planet w-6 h-6 bg-gradient-to-br from-blue-400 to-cyan-500" style="left: 80%; animation-delay: 5s;"></div>
+        <div class="planet w-10 h-10 bg-gradient-to-br from-orange-400 to-red-500" style="left: 60%; animation-delay: 10s;"></div>
+        <div class="planet w-4 h-4 bg-gradient-to-br from-green-400 to-emerald-500" style="left: 30%; animation-delay: 15s;"></div>
     </div>
 
-    <!-- Back Panel -->
-    <div class="card-face absolute inset-0 backface-hidden rotate-y-180 secret-panel rounded-2xl p-10 flex flex-col items-center justify-center text-center">
-      <h2 class="luxury-title text-3xl gold-accent mb-8">Secret Access Code</h2>
-      <div class="code-display rounded-xl p-8 mb-8">
-        <div id="secretCodeDisplay" class="text-4xl font-mono font-bold tracking-[0.2em] gold-accent mb-4">Loading...</div>
-        <div class="text-sm text-gray-300 font-light">Copy this code and enter in the main panel</div>
-      </div>
-      <button onclick="flipCard()" class="bg-white bg-opacity-10 hover:bg-opacity-20 px-8 py-3 rounded-lg text-sm font-medium tracking-wide uppercase transition-all duration-300 border border-white border-opacity-20">
-        Return
-      </button>
+    <div class="space-card rounded-3xl p-8 max-w-md w-full relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="mb-4 relative">
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6f0.png" alt="satellite" class="w-16 h-16 mx-auto glow-effect rounded-full">
+                <div class="absolute -top-2 -right-2">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2728.png" alt="sparkles" class="w-6 h-6 animate-spin">
+                </div>
+            </div>
+            <h1 class="text-2xl font-bold text-white mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">ایستگاه فضایی</h1>
+            <p class="text-purple-200 text-sm">داریم با بیگانه‌ها چت می‌کنیم... 👽</p>
+        </div>
+
+        <!-- Status Display -->
+        <div id="statusContainer" class="text-center mb-8">
+            <!-- Loading State -->
+            <div id="loadingState" class="pulse-animation">
+                <div class="mb-4 relative">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f30c.png" alt="milky way" class="w-12 h-12 mx-auto">
+                    <div class="absolute inset-0 bg-purple-500/20 rounded-full animate-ping"></div>
+                </div>
+                <p class="text-white text-lg">صبر کن... دارم با مریخی‌ها مذاکره می‌کنم! 🛸</p>
+                <div class="mt-4 bg-purple-900/30 rounded-full h-3 overflow-hidden border border-purple-500/30">
+                    <div class="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 h-full rounded-full animate-pulse"></div>
+                </div>
+            </div>
+
+            <!-- VPN Active State -->
+            <div id="vpnActiveState" class="hidden">
+                <div class="mb-4 check-animation relative">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f31f.png" alt="glowing star" class="w-16 h-16 mx-auto">
+                    <div class="absolute inset-0 bg-yellow-400/30 rounded-full animate-pulse"></div>
+                </div>
+                <h2 class="text-xl font-bold text-green-400 mb-2">یِس! بیگانه‌ها قبول کردن! 🎉</h2>
+                <p class="text-purple-200 text-sm mb-4">حالا می‌تونی با اطمینان به مریخ سفر کنی!</p>
+                <div class="bg-green-500/20 border border-green-400/30 rounded-xl p-4 mb-4 space-card">
+                    <p class="text-green-300 text-sm flex items-center justify-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2705.png" alt="check" class="w-4 h-4">
+                        پاسپورت کهکشانی تایید شد! آماده پرواز! 🚀
+                    </p>
+                </div>
+                <div id="redirectMessage" class="bg-blue-500/20 border border-cyan-400/30 rounded-xl p-4 hidden space-card">
+                    <p class="text-cyan-300 text-sm flex items-center justify-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f680.png" alt="rocket" class="w-5 h-5">
+                        موشک آماده! داریم می‌ریم خونه! 🏠
+                    </p>
+                    <p class="text-cyan-200 text-xs mt-2">شمارش معکوس: <span id="countdown">3</span> ثانیه تا پرتاب! 🚀</p>
+                </div>
+            </div>
+
+            <!-- No VPN State -->
+            <div id="noVpnState" class="hidden">
+                <div class="mb-4 error-animation relative">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f534.png" alt="red circle" class="w-16 h-16 mx-auto">
+                    <div class="absolute inset-0 bg-red-500/30 rounded-full animate-pulse"></div>
+                </div>
+                <h2 class="text-xl font-bold text-red-400 mb-2">اوه نه! بیگانه‌ها قهر کردن! 😤</h2>
+                <p class="text-purple-200 text-sm mb-4">باید باهاشون آشتی کنی تا بذارن بری فضا!</p>
+                <div class="bg-red-500/20 border border-red-400/30 rounded-xl p-4 mb-4 space-card">
+                    <p class="text-red-300 text-sm flex items-center justify-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26a0.png" alt="warning" class="w-4 h-4">
+                        مریخی‌ها گفتن "نه!" - فیلترشکن رو روشن کن! 👽
+                    </p>
+                </div>
+                <div class="text-right text-purple-300 text-xs space-y-2">
+                    <p class="flex items-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6f8.png" alt="ufo" class="w-4 h-4">
+                        یه شیرینی برای بیگانه‌ها بخر (فیلترشکن روشن کن)
+                    </p>
+                    <p class="flex items-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f504.png" alt="refresh" class="w-4 h-4">
+                        دوباره باهاشون حرف بزن (اسکن مجدد)
+                    </p>
+                    <p class="flex items-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f320.png" alt="shooting star" class="w-4 h-4">
+                        شاید از مسیر دیگه‌ای راه بدن!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="hidden">
+                <div class="mb-4 relative">
+                    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f311.png" alt="new moon" class="w-16 h-16 mx-auto">
+                    <div class="absolute inset-0 bg-yellow-500/30 rounded-full animate-pulse"></div>
+                </div>
+                <h2 class="text-xl font-bold text-yellow-400 mb-2">اینترنت قطعه یا بیگانه‌ها خوابن! 😴</h2>
+                <p class="text-purple-200 text-sm mb-4">شاید باید صبر کنی تا از خواب بیدار شن!</p>
+                <div class="bg-yellow-500/20 border border-yellow-400/30 rounded-xl p-4 space-card">
+                    <p class="text-yellow-300 text-sm flex items-center justify-center gap-2">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4e1.png" alt="satellite antenna" class="w-4 h-4">
+                        وای‌فای رو چک کن یا بیگانه‌ها رو بیدار کن! ☕
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Button (only when VPN is off) -->
+        <div id="actionButton" class="hidden">
+            <button id="recheckBtn" onclick="checkVpnStatus()" class="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 hover:from-purple-700 hover:via-pink-700 hover:to-cyan-700 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg glow-effect flex items-center justify-center gap-2">
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f50d.png" alt="magnifying glass" class="w-5 h-5">
+                بیا دوباره با بیگانه‌ها حرف بزنیم! 🛸
+            </button>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="mt-6 text-center text-purple-300 text-xs">
+            <p class="flex items-center justify-center gap-2">
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f30d.png" alt="earth" class="w-4 h-4">
+                ساخته شده توسط GHOST
+            </p>
+        </div>
     </div>
 
-  </div>
-</div>
+    <script>
+        let isChecking = false;
 
-<script>
-let attempts = 0;
-const maxAttempts = 3;
-let correctCode = ""; // این کد فقط وقتی پشت پنل باز شد تولید میشه
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
 
-const input = document.getElementById('captchaInput');
-const verifyBtn = document.getElementById('verifyBtn');
-const errorMessage = document.getElementById('errorMessage');
-const attemptsLeft = document.getElementById('attemptsLeft');
-const mainContent = document.getElementById('mainContent');
-const errorPage = document.getElementById('errorPage');
-const cardContainer = document.getElementById('cardContainer');
-const secretCodeDisplay = document.getElementById('secretCodeDisplay');
+        function showState(stateId) {
+            const states = ['loadingState', 'vpnActiveState', 'noVpnState', 'errorState'];
+            states.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(stateId).classList.remove('hidden');
+            
+            // Show button only when VPN is off or there's an error
+            const actionButton = document.getElementById('actionButton');
+            if (stateId === 'noVpnState' || stateId === 'errorState') {
+                actionButton.classList.remove('hidden');
+            } else {
+                actionButton.classList.add('hidden');
+            }
+        }
 
-// تولید کپچا فقط پشت پنل
-function generateCaptcha() {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let captcha = "";
-    for (let i = 0; i < 6; i++) {
-        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    correctCode = captcha;
-    if (secretCodeDisplay) secretCodeDisplay.textContent = captcha;
-}
+        async function checkVpnStatus() {
+            if (isChecking) return;
+            isChecking = true;
+            
+            showState('loadingState');
+            document.getElementById('recheckBtn').disabled = true;
+            
+            try {
+                // Test multiple blocked domains and services
+                const testUrls = [
+                    'https://www.google.com/favicon.ico',
+                    'https://www.youtube.com/favicon.ico',
+                    'https://www.facebook.com/favicon.ico',
+                    'https://twitter.com/favicon.ico'
+                ];
+                
+                let successCount = 0;
+                const promises = testUrls.map(async (url) => {
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 5000);
+                        
+                        const response = await fetch(url, {
+                            method: 'HEAD',
+                            mode: 'no-cors',
+                            signal: controller.signal
+                        });
+                        
+                        clearTimeout(timeoutId);
+                        successCount++;
+                        return true;
+                    } catch (error) {
+                        return false;
+                    }
+                });
+                
+                await Promise.allSettled(promises);
+                
+                // Simulate minimum loading time for better UX
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                if (successCount >= 2) {
+                    showState('vpnActiveState');
+                    
+                    // Show redirect message and start countdown
+                    setTimeout(() => {
+                        document.getElementById('redirectMessage').classList.remove('hidden');
+                        let countdown = 3;
+                        const countdownElement = document.getElementById('countdown');
+                        
+                        const timer = setInterval(() => {
+                            countdown--;
+                            countdownElement.textContent = countdown;
+                            
+                            if (countdown <= 0) {
+                                clearInterval(timer);
+                                window.location.href = 'index.html';
+                            }
+                        }, 1000);
+                    }, 1000);
+                } else {
+                    showState('noVpnState');
+                }
+                
+            } catch (error) {
+                console.error('Error checking VPN status:', error);
+                showState('errorState');
+            } finally {
+                isChecking = false;
+                document.getElementById('recheckBtn').disabled = false;
+            }
+        }
 
-// نمایش خطا و شمارش تلاش‌ها
-function showError() {
-    attempts++;
-    const remaining = maxAttempts - attempts;
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            createStars();
+            setTimeout(checkVpnStatus, 1000);
+        });
 
-    if (remaining > 0) {
-        errorMessage.classList.remove('hidden');
-        attemptsLeft.textContent = remaining;
-
-        input.classList.add('shake');
-        setTimeout(() => input.classList.remove('shake'), 600);
-
-        input.value = '';
-        input.focus();
-    } else {
-        mainContent.classList.add('hidden');
-        errorPage.classList.remove('hidden');
-    }
-}
-
-// بررسی کد وارد شده توسط کاربر
-function verifyCode() {
-    const enteredCode = input.value.trim().toUpperCase();
-    if (enteredCode === correctCode) {
-        input.style.borderColor = '#10b981';
-        input.style.boxShadow = '0 0 8px #10b981';
-        verifyBtn.textContent = 'Authenticating...';
-        verifyBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1200);
-    } else {
-        showError();
-    }
-}
-
-// flip کردن کارت و تولید کپچا
-function flipCard() {
-    cardContainer.classList.toggle('card-flipped');
-    if (cardContainer.classList.contains('card-flipped')) {
-        generateCaptcha(); // پشت پنل کپچا تولید می‌کنه
-    }
-}
-
-// Event listeners
-verifyBtn.addEventListener('click', verifyCode);
-input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') verifyCode();
-});
-input.addEventListener('input', () => {
-    if (!errorMessage.classList.contains('hidden')) {
-        errorMessage.classList.add('hidden');
-    }
-});
-
-// Load اولیه: هیچ کپچایی تو پنل اصلی نمایش داده نمی‌شه
-window.addEventListener('load', () => {
-    input.focus();
-});
-
-</script>
-
-</body>
+        // Add click feedback to buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97cf489a64972682',t:'MTc1NzUxMTA2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
